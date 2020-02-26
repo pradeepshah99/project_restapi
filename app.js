@@ -1,11 +1,9 @@
 const bodyParser = require('body-parser');
-const user = require('./controllers/user/user');
-const login = require('./controllers/login/login');
-const product = require('./controllers/products/product');
-const review = require('./controllers/reviews/review');
+const user = require('./routes/user');
+const login = require('./routes/login');
+const product = require('./routes/product');
+const review = require('./routes/review');
 module.exports = function(app) {
-
-
 
     app.use(bodyParser.text())
 
@@ -18,10 +16,6 @@ module.exports = function(app) {
         if (!req.headers.authorization) {
             return res.status(403).json({ error: 'No credentials sent!' });
         }
-
-        // check valid
-        console.log(req.headers.authorization);
-
         next();
     };
     app.use(checkAuth);
