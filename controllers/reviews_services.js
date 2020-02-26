@@ -74,4 +74,11 @@ exports.show_product_reviews = (req, res) => {
         }
     })
 
+
+    // db.find({}).populate('product_id').exec(function(err, doc) {
+    //     res.send(doc)
+    // })
+
+
+
 }

@@ -90,31 +90,31 @@ exports.log_in = (req, res) => {
 
 }
 
-// exports.tokeninn = (req, res) => {
+exports.tokeninn = (req, res) => {
 
-//     var content = JSON.parse((req.body).toString())
-//     db.findOne({ email: content.email }, (err, data) => {
+    var content = JSON.parse((req.body).toString())
+    db.findOne({ email: content.email }, (err, data) => {
 
-//         if (!data) {
-//             res.json({
-//                 sucess: false,
-//                 message: "Incorrect login"
-//             })
-//         } else {
-//             var token = jwt.sign({
-//                 id: data._id,
-//                 firstName: data.f_name,
-//                 lastName: data.l_name,
-//                 email: data.email,
-//             }, conn[1].key, { expiresIn: 600 * 600 });
+        if (!data) {
+            res.json({
+                sucess: false,
+                message: "Incorrect login"
+            })
+        } else {
+            var token = jwt.sign({
+                id: data._id,
+                firstName: data.f_name,
+                lastName: data.l_name,
+                email: data.email,
+            }, conn[1].key, { expiresIn: 600 * 600 });
 
-//             res.json({
-//                 sucess: true,
-//                 message: "Token Generated successfully",
-//                 token: token
+            res.json({
+                sucess: true,
+                message: "Token Generated successfully",
+                token: token
 
-//             })
+            })
 
-//         }
-//     })
-// };
+        }
+    })
+};

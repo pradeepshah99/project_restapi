@@ -4,66 +4,66 @@ var db = require('../models/user_schema')
 var jwt = require('jsonwebtoken')
 
 
-exports.register = (req, res) => {
+// exports.register = (req, res) => {
 
-    // content that help to convert the body data into the string
+//     // content that help to convert the body data into the string
 
-    var contentData = JSON.parse(req.body.toString());
+//     var contentData = JSON.parse(req.body.toString());
 
-    var dataS = {
-        f_name: contentData.f_name,
-        l_name: contentData.l_name,
-        email: contentData.email
-    };
+//     var dataS = {
+//         f_name: contentData.f_name,
+//         l_name: contentData.l_name,
+//         email: contentData.email
+//     };
 
-    // Validate if the user are registered than the message are show user registered otherwise create the users
-    db.find({ email: contentData.email }, (err, docs) => {
-        if (docs.length) {
-            var obj = new db({
-                f_name: contentData.f_name,
-                l_name: contentData.l_name,
-                email: contentData.email,
-                password: bcrypt.hashSync(contentData.password, 10)
-            })
-            obj.save((err, data) => {
-                if (!err) {
-                    res.json({
-                        sucess: true,
-                        message: "User Add Successfully",
-                        data: dataS
-                    })
-                } else res.json({
-                    sucess: false,
-                    message: "User Not Added",
+//     // Validate if the user are registered than the message are show user registered otherwise create the users
+//     db.find({ email: contentData.email }, (err, docs) => {
+//         if (docs.length) {
+//             var obj = new db({
+//                 f_name: contentData.f_name,
+//                 l_name: contentData.l_name,
+//                 email: contentData.email,
+//                 password: bcrypt.hashSync(contentData.password, 10)
+//             })
+//             obj.save((err, data) => {
+//                 if (!err) {
+//                     res.json({
+//                         sucess: true,
+//                         message: "User Add Successfully",
+//                         data: dataS
+//                     })
+//                 } else res.json({
+//                     sucess: false,
+//                     message: "User Not Added",
 
-                })
-            })
-        } else {
-            var obj = new db({
-                f_name: contentData.f_name,
-                l_name: contentData.l_name,
-                email: contentData.email,
-                password: bcrypt.hashSync(contentData.password, 10),
+//                 })
+//             })
+//         } else {
+//             var obj = new db({
+//                 f_name: contentData.f_name,
+//                 l_name: contentData.l_name,
+//                 email: contentData.email,
+//                 password: bcrypt.hashSync(contentData.password, 10),
 
-            })
-            obj.save((err, data) => {
-                if (!err) {
-                    res.json({
-                        sucess: true,
-                        message: "User Add Successfully",
-                        data: dataS
-                    })
-                } else {
-                    res.json({
-                        sucess: false,
-                        message: "User not Added"
-                    })
-                }
-            })
-        }
-    })
+//             })
+//             obj.save((err, data) => {
+//                 if (!err) {
+//                     res.json({
+//                         sucess: true,
+//                         message: "User Add Successfully",
+//                         data: dataS
+//                     })
+//                 } else {
+//                     res.json({
+//                         sucess: false,
+//                         message: "User not Added"
+//                     })
+//                 }
+//             })
+//         }
+//     })
 
-}
+// }
 
 
 
@@ -95,6 +95,41 @@ exports.delete_user = (req, res) => {
     })
 
 }
+
+
+//delete1 
+
+
+exports.delete_user1 = (req, res) => {
+
+
+    var currentuser = req.headers.authorization;
+
+    jwt.verify(currentuser, conn[1].key, (err, data) => {
+        db.deleteOne({ _id: req.params.id }, function(err, doc) {
+
+            if (doc.deletedCount === 0) {
+
+                res.json({
+                    sucess: false,
+                    message: "User Not Found",
+                    data: doc,
+                })
+
+            } else {
+                res.json({
+                    sucess: true,
+                    message: "User Deleted successfully",
+                    data: [""]
+                })
+            }
+        })
+    })
+
+}
+
+
+
 
 
 // Update the user to the user Id and upgrade the details 
